@@ -12,7 +12,6 @@ function parseFile (indata, outdata, delimiter = ';') {
     const data = fs.readFileSync(indata, "utf-8");
     const lines = data.split(/\n/).slice(1);
     let noOfRecords = lines.length;
-    // return noOfRecords;
     // --------------------! 3. transform input data array!----------------
     let outputArray = [];
       // loop through indata array and transform each line & push into ouput Array.
@@ -31,6 +30,7 @@ function parseFile (indata, outdata, delimiter = ';') {
 
     // --------------------! 4. add data to the output file!----------------
     fs.appendFileSync(outdata, outdataString)
+    return noOfRecords;
   } 
 }
 
