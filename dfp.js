@@ -5,39 +5,50 @@ function parseFile (indata, outdata, delimiter = ';') {
   if (fs.existsSync(outdata)){
     fs.unlinkSync(outdata);
   }
-  // --------------------! 2. read input file and check if exists!----------------
+
+  // --------------------! 2. check if input files exists!----------------
   if (!fs.existsSync(indata)){
     return -1;
   } else {
     const data = fs.readFileSync(indata, "utf-8");
     const lines = data.split(/\n/).slice(1);
-    let noOfRecords = lines.length;
+
     // --------------------! 3. transform input data array!----------------
     let outputArray = [];
       // loop through indata array and transform each line & push into ouput Array.
       for (let line of lines){
-        elementArray = line.split(";");
+        elementArray = line.includes(";") ? line.split(";") : line.split(",");
         let review = elementArray[0].trim().slice(0,20);
-        outputArray.push([elementArray[1],review])
+        let sentiment= elementArray[1].trim();
+        outputArray.push([sentiment,review])
       }
-      // change each line array into string separated by delimiter
-      outputArray = outputArray.map(output => output.join(";"))
-      
-      // convert outputArray into one string to pass to appendFileSync
-      outdataString = outputArray.join("\n")
-      // console.log(outdataString);
 
+    // Array of arrays: change each array into string separated by delimiter
+    outputArray = outputArray.map(output => output.join(delimiter))
+    
+    // convert outputArray into one string to pass to appendFileSync
+    outdataString =  outputArray.join("\n") + "\n"
 
     // --------------------! 4. add data to the output file!----------------
-    fs.appendFileSync(outdata, outdataString)
-    return noOfRecords;
+    fs.writeFileSync(outdata, outdataString)
+    
+    
+    // --------------------! 5. return total numbers of lines in input data!----------------
+    return lines.length;
+    // console.log(lines.length);
   } 
 }
 
 
 
-console.log(parseFile("datafile.csv","outputfile.csv"))
-// console.log(parseFile("./testing/testdata_1.csv","outputfile.csv"))
+// console.log(parseFile("datafile.csv","outputfile.csv"))
+// console.log(parseFile("datafile.csv","outputfile.csv",","))
+console.log(parseFile("./testing/testdata_1.csv","outputfile.csv"))
+// console.log(parseFile("./testing/testdata_1.csv","outputfile.csv",","))
+// console.log(parseFile("./testing/testdata_5.csv","outputfile.csv"))
+// console.log(parseFile("./testing/testdata_5.csv","outputfile.csv",","))
+
+
 
 
 
