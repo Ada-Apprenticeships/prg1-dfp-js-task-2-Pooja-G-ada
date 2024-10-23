@@ -6,7 +6,9 @@ function parseFile (indata, outdata, delimiter = ';') {
     fs.unlinkSync(outdata);
   }
   // --------------------! 2. read input file and check if exists!----------------
-  if (fs.existsSync(indata)){
+  if (!fs.existsSync(indata)){
+    return -1;
+  } else {
     const data = fs.readFileSync(indata, "utf-8");
     const lines = data.split(/\n/).slice(1);
     let noOfRecords = lines.length;
@@ -29,9 +31,7 @@ function parseFile (indata, outdata, delimiter = ';') {
 
     // --------------------! 4. add data to the output file!----------------
     fs.appendFileSync(outdata, outdataString)
-  } else {
-    return -1;
-  }
+  } 
 }
 
 
