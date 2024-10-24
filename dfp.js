@@ -8,20 +8,18 @@ function parseFile (indata, outdata, delimiter = ';') {
   if (!fs.existsSync(indata)){
     return -1;
   } else {
-    // --------------------! 3a. if input file exists process the input file 
-    // (to return transformed output data in Array) !----------------
+    // --------------------! 3a. if input file exists process the input file exc. header 
+    // (to return transformed outdata in Array) !----------------
     const data = fs.readFileSync(indata, "utf-8");
     const lines = data.split(/\n/).slice(1);
     let outdataArray = lines.map((line) => {
-      elementArray = line.includes(";") ? line.split(";") : line.split(",");
-      let review = elementArray[0].trim().slice(0,20);
-      let sentiment= elementArray[1].trim();
-      return `${sentiment}${delimiter}${review}`
+      let [review, sentiment] = line.includes(";") ? line.split(";") : line.split(",");
+      return `${sentiment.trim()}${delimiter}${review.trim().slice(0,20)}`
     })
-    // --------------------! 3b. add output data to the output file !----------------
+    // --------------------! 3b. add outdata to the outdata file !----------------
     let outdataString =  outdataArray.join("\n") + "\n"
     fs.appendFileSync(outdata, outdataString)
-    // --------------------! 3c. return total numbers of indata lines exc. header !----------------
+    // --------------------! 3c. return total numbers of indata lines !----------------
     return lines.length;
   } 
 }
