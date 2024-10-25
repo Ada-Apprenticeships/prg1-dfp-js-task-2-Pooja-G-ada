@@ -24,19 +24,8 @@ function parseFile (indata, outdata, delimiter = ';') {
   } 
 }
 
-
-
-console.log(parseFile("datafile.csv","outputfile.csv"))
-// console.log(parseFile("datafile.csv","outputfile.csv",","))
-// console.log(parseFile("./testing/testdata_1.csv","outputfile.csv"))
-// console.log(parseFile("./testing/testdata_1.csv","outputfile.csv",","))
-// console.log(parseFile("./testing/testdata_5.csv","outputfile.csv"))
-// console.log(parseFile("./testing/testdata_5.csv","outputfile.csv",","))
-
-
-
-
-
+// --my testing--
+// console.log(parseFile("datafile.csv","outputfile.csv"))
 
 // Leave this code here for the automated tests
 module.exports = {
